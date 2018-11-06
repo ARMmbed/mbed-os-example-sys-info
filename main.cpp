@@ -36,5 +36,16 @@ int main()
     */
     printf("Compiler Version: %d \n", stats.compiler_version);
 
+    /* RAM / ROM memory start and size information */
+    for (int i = 0; i < MBED_MAX_MEM_REGIONS; i++) {
+        if (stats.ram_size[i] != 0) {
+            printf("RAM%d: Start 0x%x Size: 0x%x \n",i , stats.ram_start[i], stats.ram_size[i]);
+        }
+    }
+    for (int i = 0; i < MBED_MAX_MEM_REGIONS; i++) {
+        if (stats.rom_size[i] != 0) {
+            printf("ROM%d: Start 0x%x Size: 0x%x \n",i, stats.rom_start[i], stats.rom_size[i]);
+        }
+    }
     return 0;
 }
