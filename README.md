@@ -1,60 +1,37 @@
-# Getting started with System Information on Mbed OS
+![](./resources/official_armmbed_example_badge.png)
+# System Information Mbed OS Example
 
-This guide reviews the steps required to get system information on Mbed OS platform.
+This guide reviews the steps required to get system information on Mbed OS platform. It contains an application that can be run on all supported [Mbed boards](https://os.mbed.com/platforms/).
 
-Please install [mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
+The project can be built with all supported [Mbed OS build tools](https://os.mbed.com/docs/mbed-os/latest/tools/index.html). However, this example project specifically refers to the command line interface tool [Arm Mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
+(Note: To see a rendered example you can import into the Arm Online Compiler, please see our [import quick start](https://os.mbed.com/docs/mbed-os/latest/quick-start/online-with-the-online-compiler.html#importing-the-code).)
 
-## Import the example application
+Please install Arm Mbed CLI.
 
-From the command-line, import the example:
+Clone this repository on your system and change the current directory to where the project was cloned.
 
+## Application functionality
+
+The `main()` function outputs on the serial interface information about the hardware (CPU, ROM and RAM), the firmware (Version), as well as the compiler used to build the binary.
+
+## Building and Running
+
+1. Connect a USB cable between the USB port on the target and the host computer.
+2. Run the following command to build the example project and program the microcontroller flash memory:
+```bash
+$ mbed compile -m <TARGET> -t <TOOLCHAIN> --flash
 ```
-mbed import mbed-os-example-sys-info
-cd mbed-os-example-sys-info
+Your PC may take a few minutes to compile your code.
+
+The binary is located at `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-sys-info.bin` and can alternatively be manually copied to the target which gets mounted on the host computer via USB.
+
+Depending on the target, the example project can be built with GCC_ARM, ARM or IAR toolchain. Run the command below after installing ARM Mbed CLI to determine which toolchain supports your target.
+
+```bash
+$ mbed compile -S
 ```
-
-### Now compile
-
-Invoke `mbed compile`, and specify the name of your platform and your favorite toolchain (`GCC_ARM`, `ARM`, `IAR`). For example, for the ARM Compiler 5:
-
-```
-mbed compile -m K64F -t ARM
-```
-
-Your PC may take a few minutes to compile your code. At the end, you see the following result:
-
-```
-[snip]
-+------------------+-------+-------+------+
-| Module           | .text | .data | .bss |
-+------------------+-------+-------+------+
-| [lib]\c_w.l      | 11473 |    16 |  348 |
-| [lib]\cpprt_w.l  |    36 |     0 |    0 |
-| [lib]\fz_wm.l    |    18 |     0 |    0 |
-| [lib]\m_wm.l     |    48 |     0 |    0 |
-| anon$$obj.o      |    32 |     0 | 1024 |
-| main.o           |   136 |     0 |    0 |
-| mbed-os\drivers  |   130 |     0 |    0 |
-| mbed-os\features |   132 |     0 |  304 |
-| mbed-os\hal      |  1660 |    30 |   64 |
-| mbed-os\platform |  3465 |   104 |  604 |
-| mbed-os\rtos     | 12926 |  2310 | 4592 |
-| mbed-os\targets  |  9193 |   104 |  324 |
-| Subtotals        | 39249 |  2564 | 7260 |
-+------------------+-------+-------+------+
-Total Static RAM memory (data + bss): 9824 bytes
-Total Flash memory (text + data): 41813 bytes
-
-Image: .\BUILD\K64F\ARM\mbed-os-example-sys-info.bin
-```
-
-### Program your board
-
-1. Connect your Mbed device to the computer over USB.
-1. Copy the binary file to the Mbed device.
-1. Press the reset button to start the program.
 
 ### License and contributions
 The software is provided under Apache-2.0 license. Contributions to this project are accepted under the same license. Please see contributing.md for more info.
 
-This project contains code from other projects. The original license text is included in those source files. They must comply with our license guide
+This project contains code from other projects. The original license text is included in those source files. They must comply with our license guide.
