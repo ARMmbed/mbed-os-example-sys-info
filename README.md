@@ -1,60 +1,98 @@
-# Getting started with System Information on Mbed OS
+![](./resources/official_armmbed_example_badge.png)
+# System Information Mbed OS Example
 
 This guide reviews the steps required to get system information on Mbed OS platform.
 
-Please install [mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
+The project can be built with all supported [Mbed OS build tools](https://os.mbed.com/docs/mbed-os/latest/tools/index.html). However, this example project specifically refers to the command line interface tool [Arm Mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
 
-## Import the example application
+Please install Arm Mbed CLI.
 
-From the command-line, import the example:
+Clone this repository on your system and change the current directory to where the project was cloned.
 
+## Application functionality
+
+The `main()` function outputs on the serial interface information about the hardware (CPU, ROM and RAM), the firmware (version), as well as the compiler used to build the binary.
+
+## Building and Running
+
+1. Connect a USB cable between the USB port on the target and the host computer.
+2. Run the following command to build the example project and program the microcontroller flash memory:
+```bash
+$ mbed compile -m <TARGET> -t <TOOLCHAIN> --flash --sterm
 ```
-mbed import mbed-os-example-sys-info
-cd mbed-os-example-sys-info
-```
+Note: Mbed CLI command-line option "--sterm" is used to open a serial terminal after flashing.
 
-### Now compile
+Your PC may take a few minutes to compile your code.
 
-Invoke `mbed compile`, and specify the name of your platform and your favorite toolchain (`GCC_ARM`, `ARM`, `IAR`). For example, for the ARM Compiler 5:
+The binary is located at `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-sys-info.bin` and can alternatively be manually copied to the target which gets mounted on the host computer via USB.
 
-```
-mbed compile -m K64F -t ARM
-```
+Depending on the target, the example project can be built with GCC_ARM, ARM or IAR toolchain. Run the command below after installing ARM Mbed CLI to determine which toolchain supports your target.
 
-Your PC may take a few minutes to compile your code. At the end, you see the following result:
-
-```
-[snip]
-+------------------+-------+-------+------+
-| Module           | .text | .data | .bss |
-+------------------+-------+-------+------+
-| [lib]\c_w.l      | 11473 |    16 |  348 |
-| [lib]\cpprt_w.l  |    36 |     0 |    0 |
-| [lib]\fz_wm.l    |    18 |     0 |    0 |
-| [lib]\m_wm.l     |    48 |     0 |    0 |
-| anon$$obj.o      |    32 |     0 | 1024 |
-| main.o           |   136 |     0 |    0 |
-| mbed-os\drivers  |   130 |     0 |    0 |
-| mbed-os\features |   132 |     0 |  304 |
-| mbed-os\hal      |  1660 |    30 |   64 |
-| mbed-os\platform |  3465 |   104 |  604 |
-| mbed-os\rtos     | 12926 |  2310 | 4592 |
-| mbed-os\targets  |  9193 |   104 |  324 |
-| Subtotals        | 39249 |  2564 | 7260 |
-+------------------+-------+-------+------+
-Total Static RAM memory (data + bss): 9824 bytes
-Total Flash memory (text + data): 41813 bytes
-
-Image: .\BUILD\K64F\ARM\mbed-os-example-sys-info.bin
+```bash
+$ mbed compile -S
 ```
 
-### Program your board
+## Expected output 
+The serial terminal shows an output similar to the following: 
+``` 
+--- Terminal on /dev/ttyACM0 - 9600,8,N,1 ---
+Mbed OS Version: 51500 
+CPU ID: 0x410fc241 
+Compiler ID: 1 
+Compiler Version: 6130008 
+RAM0: Start 0x20000000 Size: 0x30000 
+RAM1: Start 0x1fff0000 Size: 0x10000 
+ROM0: Start 0x0 Size: 0x100000 
+``` 
 
-1. Connect your Mbed device to the computer over USB.
-1. Copy the binary file to the Mbed device.
-1. Press the reset button to start the program.
+Below describes interpreting the above terminal logs:
+
+CPU ID Register information:
+```
+Bits [31:24] Implementer:  0x41 = ARM
+
+Bits [23:20] Variant:      0x0 = Major revision
+
+Bits [19:16] Architecture: 0xC  = Baseline Architecture,
+                           0xF  = Constant (Mainline Architecture)
+
+Bits [15:4] Part NO:       0xC20 =  Cortex-M0,
+                           0xC60 = Cortex-M0+,
+                           0xC23 = Cortex-M3,
+                           0xC24 = Cortex-M4,
+                           0xC27 = Cortex-M7,
+                           0xD20 = Cortex-M23,
+                           0xD21 = Cortex-M33
+
+Bits [3:0] Revision:       Minor revision: 0x1 = Patch 1
+```
+
+
+Compiler IDs:
+```
+ARM = 1
+GCC_ARM = 2
+IAR = 3
+```
+
+Compiler versions:
+```
+ARM: PVVbbbb (P = Major; VV = Minor; bbbb = build number)
+GCC: VVRRPP  (VV = Version; RR = Revision; PP = Patch)
+IAR: VRRRPPP (V = Version; RRR = Revision; PPP = Patch)
+```
+
+## Troubleshooting 
+If you have problems, you can review the [documentation](https://os.mbed.com/docs/latest/tutorials/debugging.html) for suggestions on what could be wrong and how to fix it. 
+
+## Related Links 
+
+* [Mbed OS Stats API](https://os.mbed.com/docs/latest/apis/mbed-statistics.html). 
+* [Mbed OS Configuration](https://os.mbed.com/docs/latest/reference/configuration.html). 
+* [Mbed OS Serial Communication](https://os.mbed.com/docs/latest/tutorials/serial-communication.html). 
+* [Mbed boards](https://os.mbed.com/platforms/).
 
 ### License and contributions
 The software is provided under Apache-2.0 license. Contributions to this project are accepted under the same license. Please see contributing.md for more info.
 
-This project contains code from other projects. The original license text is included in those source files. They must comply with our license guide
+This project contains code from other projects. The original license text is included in those source files. They must comply with our license guide.
