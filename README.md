@@ -1,39 +1,49 @@
 ![](./resources/official_armmbed_example_badge.png)
-# System Information Mbed OS Example
+# System information Mbed OS example
 
-This guide reviews the steps required to get system information on Mbed OS platform.
+This guide reviews the steps required to get system information onto an Mbed OS enabled platform.
 
-The project can be built with all supported [Mbed OS build tools](https://os.mbed.com/docs/mbed-os/latest/tools/index.html). However, this example project specifically refers to the command line interface tool [Arm Mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
-
-Please install Arm Mbed CLI.
-
-Clone this repository on your system and change the current directory to where the project was cloned.
+You can build this project with all supported [Mbed OS build tools](https://os.mbed.com/docs/mbed-os/latest/tools/index.html). However, this example project specifically refers to the command-line interface tool [Arm Mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
 
 ## Application functionality
 
-The `main()` function outputs on the serial interface information about the hardware (CPU, ROM and RAM), the firmware (version), as well as the compiler used to build the binary.
+The `main()` function outputs on the serial interface information about the hardware (CPU, ROM and RAM), the firmware (version)and the compiler used to build the binary.
 
-## Building and Running
+## Prerequisites
+
+1. Install Mbed CLI.
+1. Determine the toolchain that supports your target.
+
+   Depending on the target, the example project can be built with the GCC_ARM, ARM or IAR toolchain. Run this command to determine which toolchain supports your target:
+
+   ```bash
+   $ mbed compile -S
+   ```
+   
+1. Clone this repository on your system.
+1. Change the current directory to where the project was cloned.
+
+## Building and running
 
 1. Connect a USB cable between the USB port on the target and the host computer.
-2. Run the following command to build the example project and program the microcontroller flash memory:
-```bash
-$ mbed compile -m <TARGET> -t <TOOLCHAIN> --flash --sterm
-```
-Note: Mbed CLI command-line option "--sterm" is used to open a serial terminal after flashing.
+1. Run the following command to build the example project and program the microcontroller flash memory:
+
+   ```bash
+   $ mbed compile -m <TARGET> -t <TOOLCHAIN> --flash --sterm
+   ```
+   
+Note: You can use the Mbed CLI command-line option "--sterm" to open a serial terminal after flashing.
 
 Your PC may take a few minutes to compile your code.
 
-The binary is located at `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-sys-info.bin` and can alternatively be manually copied to the target which gets mounted on the host computer via USB.
+The binary is located at `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-sys-info.bin`.
 
-Depending on the target, the example project can be built with GCC_ARM, ARM or IAR toolchain. Run the command below after installing ARM Mbed CLI to determine which toolchain supports your target.
-
-```bash
-$ mbed compile -S
-```
+Alternatively, you can manually copy the binary to the target, which gets mounted on the host computer through USB.
 
 ## Expected output 
-The serial terminal shows an output similar to the following: 
+
+The serial terminal shows an output similar to: 
+
 ``` 
 --- Terminal on /dev/ttyACM0 - 9600,8,N,1 ---
 Mbed OS Version: 51500 
@@ -45,9 +55,10 @@ RAM1: Start 0x1fff0000 Size: 0x10000
 ROM0: Start 0x0 Size: 0x100000 
 ``` 
 
-Below describes interpreting the above terminal logs:
+You can use the CPU ID register, compiler ID and compiler version information below to interpret the above terminal logs.
 
-CPU ID Register information:
+CPU ID register information:
+
 ```
 Bits [31:24] Implementer:  0x41 = ARM
 
@@ -67,8 +78,8 @@ Bits [15:4] Part NO:       0xC20 =  Cortex-M0,
 Bits [3:0] Revision:       Minor revision: 0x1 = Patch 1
 ```
 
-
 Compiler IDs:
+
 ```
 ARM = 1
 GCC_ARM = 2
@@ -76,6 +87,7 @@ IAR = 3
 ```
 
 Compiler versions:
+
 ```
 ARM: PVVbbbb (P = Major; VV = Minor; bbbb = build number)
 GCC: VVRRPP  (VV = Version; RR = Revision; PP = Patch)
@@ -83,16 +95,18 @@ IAR: VRRRPPP (V = Version; RRR = Revision; PPP = Patch)
 ```
 
 ## Troubleshooting 
+
 If you have problems, you can review the [documentation](https://os.mbed.com/docs/latest/tutorials/debugging.html) for suggestions on what could be wrong and how to fix it. 
 
-## Related Links 
+## Related links 
 
 * [Mbed OS Stats API](https://os.mbed.com/docs/latest/apis/mbed-statistics.html). 
-* [Mbed OS Configuration](https://os.mbed.com/docs/latest/reference/configuration.html). 
-* [Mbed OS Serial Communication](https://os.mbed.com/docs/latest/tutorials/serial-communication.html). 
+* [Mbed OS configuration](https://os.mbed.com/docs/latest/reference/configuration.html). 
+* [Mbed OS serial communication](https://os.mbed.com/docs/latest/tutorials/serial-communication.html). 
 * [Mbed boards](https://os.mbed.com/platforms/).
 
 ### License and contributions
-The software is provided under Apache-2.0 license. Contributions to this project are accepted under the same license. Please see contributing.md for more info.
+
+The software is provided under the Apache-2.0 license. Contributions to this project are accepted under the same license. Please see contributing.md for more information.
 
 This project contains code from other projects. The original license text is included in those source files. They must comply with our license guide.
