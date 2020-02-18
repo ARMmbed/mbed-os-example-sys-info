@@ -1,7 +1,6 @@
 {
     "target_overrides": {
         "*": {
-            "platform.stdio-convert-newlines": 1,
             "platform.sys-stats-enabled": true
         }
     }

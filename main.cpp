@@ -15,6 +15,7 @@
 * limitations under the License.
 */
 #include "mbed.h"
+#include <inttypes.h>
 
 #if !defined(MBED_SYS_STATS_ENABLED)
 #error [NOT_SUPPORTED] System statistics not supported
@@ -25,7 +26,7 @@ int main()
     mbed_stats_sys_t stats;
     mbed_stats_sys_get(&stats);
 
-    printf("Mbed OS Version: %ld \n", stats.os_version);
+    printf("Mbed OS Version: %" PRId32 "\n", stats.os_version);
 
     /* CPUID Register information
     [31:24]Implementer      0x41 = ARM
@@ -41,7 +42,7 @@ int main()
                             0xD21 = Cortex-M33
     [3:0]Revision           Minor revision: 0x1 = Patch 1
     */
-    printf("CPU ID: 0x%x \n", stats.cpu_id);
+    printf("CPU ID: 0x%" PRIx32 "\n", stats.cpu_id);
 
     /* Compiler IDs
         ARM     = 1
@@ -55,17 +56,17 @@ int main()
        GCC: VVRRPP  (VV = Version; RR = Revision; PP = Patch)
        IAR: VRRRPPP (V = Version; RRR = Revision; PPP = Patch)
     */
-    printf("Compiler Version: %d \n", stats.compiler_version);
+    printf("Compiler Version: %" PRId32 "\n", stats.compiler_version);
 
     /* RAM / ROM memory start and size information */
     for (int i = 0; i < MBED_MAX_MEM_REGIONS; i++) {
         if (stats.ram_size[i] != 0) {
-            printf("RAM%d: Start 0x%lx Size: 0x%lx \n", i, stats.ram_start[i], stats.ram_size[i]);
+            printf("RAM%d: Start 0x%" PRIx32 " Size: 0x%" PRIx32 "\n", i, stats.ram_start[i], stats.ram_size[i]);
         }
     }
     for (int i = 0; i < MBED_MAX_MEM_REGIONS; i++) {
         if (stats.rom_size[i] != 0) {
-            printf("ROM%d: Start 0x%lx Size: 0x%lx \n", i, stats.rom_start[i], stats.rom_size[i]);
+            printf("ROM%d: Start 0x%" PRIx32 " Size: 0x%" PRIx32 "\n", i, stats.rom_start[i], stats.rom_size[i]);
         }
     }
     return 0;
