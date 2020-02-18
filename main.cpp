@@ -17,7 +17,7 @@
 #include "mbed.h"
 
 #if !defined(MBED_SYS_STATS_ENABLED)
-#error [NOT_SUPPORTED] test not supported
+#error [NOT_SUPPORTED] System statistics not supported
 #endif
 
 int main()

@@ -1,27 +1,17 @@
 ![](./resources/official_armmbed_example_badge.png)
 # System information Mbed OS example
 
-This guide reviews the steps required to get system information onto an Mbed OS enabled platform.
+This example shows how to get system information onto an Mbed OS enabled platform.
 
 You can build this project with all supported [Mbed OS build tools](https://os.mbed.com/docs/mbed-os/latest/tools/index.html). However, this example project specifically refers to the command-line interface tool [Arm Mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
 
-## Application functionality
-
-The `main()` function outputs on the serial interface information about the hardware (CPU, ROM and RAM), the firmware (version)and the compiler used to build the binary.
-
-## Prerequisites
-
 1. Install Mbed CLI.
-1. Determine the toolchain that supports your target.
-
-   Depending on the target, the example project can be built with the GCC_ARM, ARM or IAR toolchain. Run this command to determine which toolchain supports your target:
-
-   ```bash
-   $ mbed compile -S
-   ```
-   
 1. Clone this repository on your system.
 1. Change the current directory to where the project was cloned.
+
+## Application functionality
+
+The `main()` function outputs on the serial interface information about the hardware (CPU, ROM and RAM), the firmware (version) and the compiler used to build the binary.
 
 ## Building and running
 
@@ -39,6 +29,12 @@ Your PC may take a few minutes to compile your code.
 The binary is located at `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-sys-info.bin`.
 
 Alternatively, you can manually copy the binary to the target, which gets mounted on the host computer through USB.
+
+Depending on the target, you can build the example project with the `GCC_ARM`, `ARM` or `IAR` toolchain. After installing Arm Mbed CLI, run the command below to determine which toolchain supports your target:
+
+```bash
+$ mbed compile -S
+```
 
 ## Expected output 
 
@@ -92,6 +88,20 @@ Compiler versions:
 ARM: PVVbbbb (P = Major; VV = Minor; bbbb = build number)
 GCC: VVRRPP  (VV = Version; RR = Revision; PP = Patch)
 IAR: VRRRPPP (V = Version; RRR = Revision; PPP = Patch)
+```
+
+## Configuring the application
+
+You can enable the system statistics feature by setting `platform.sys-stats-enabled` to true in the application configuration file:
+
+```
+{
+    "target_overrides": {
+        "*": {            
+            "platform.sys-stats-enabled": true            
+        }
+    }
+}
 ```
 
 ## Troubleshooting 
